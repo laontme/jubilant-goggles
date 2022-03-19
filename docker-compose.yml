@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+    db:
+        image: mariadb
+        restart: always
+        ports:
+            - "3306:3306"
+        volumes:
+            -  db:/var/lib/mysql
+        environment:
+            MARIADB_RANDOM_ROOT_PASSWORD: "yes"
+            MARIADB_DATABASE: jubilant-goggles
+            MARIADB_USER: jubilant-goggles
+            MARIADB_PASSWORD: jubilant-goggles
+
+    pma:
+        image: phpmyadmin
+        restart: always
+        ports:
+            - "3000:80"
+        environment:
+            PMA_ARBITRARY: true
+            PMA_USER: jubilant-goggles
+            PMA_PASSWORD: jubilant-goggles
+            PMA_HOST: db
+
+volumes:
+    db:
