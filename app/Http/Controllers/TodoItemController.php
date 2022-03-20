@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TodoItemStoreRequest;
 use App\Http\Requests\TodoItemUpdateRequest;
+use App\Http\Resources\TodoItemCollection;
 use App\Http\Resources\TodoItemResource;
 use App\Models\TodoItem;
 use App\Models\TodoList;
@@ -11,8 +12,13 @@ use Illuminate\Http\Request;
 
 class TodoItemController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $todoItems = auth()->user()->TodoItems()->get();
+
+        if ($request->expectsJson()) {
+            return new TodoItemCollection($todoItems);
+        }
     }
 
     public function create(Request $request)

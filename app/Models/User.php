@@ -43,14 +43,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected function password (): Attribute
+    protected function password(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => bcrypt($value)
+            set: fn($value) => bcrypt($value)
         );
     }
 
-    public function TodoLists () {
+    public function TodoLists()
+    {
         return $this->hasMany(TodoList::class, 'owner_id', 'id');
+    }
+
+    public function TodoItems()
+    {
+        return $this->hasManyThrough(
+            TodoItem::class,
+            TodoList::class,
+            'owner_id',
+            'list_id'
+        );
     }
 }
