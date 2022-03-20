@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TodoListStoreRequest;
 use App\Http\Requests\TodoListUpdateRequest;
+use App\Http\Resources\TodoListCollection;
+use App\Http\Resources\TodoListResource;
 use App\Models\TodoList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +14,13 @@ class TodoListController extends Controller
 {
     public function index(Request $request)
     {
+        $todoLists = $request->user()->TodoLists()->with("TodoItems")->get();
+
+        if ($request->expectsJson()) {
+            return new TodoListCollection($todoLists);
+        }
+
+        return true;
     }
 
     public function create()
@@ -29,6 +38,11 @@ class TodoListController extends Controller
 
     public function show(TodoList $todoList, Request $request)
     {
+        if ($request->expectsJson()) {
+            return new TodoListResource($todoList->with('TodoItems')->first());
+        }
+
+        return true;
     }
 
     public function edit(TodoList $todoList)

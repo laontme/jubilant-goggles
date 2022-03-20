@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TodoItemStoreRequest;
 use App\Http\Requests\TodoItemUpdateRequest;
+use App\Http\Resources\TodoItemResource;
 use App\Models\TodoItem;
 use App\Models\TodoList;
 use Illuminate\Http\Request;
@@ -28,8 +29,11 @@ class TodoItemController extends Controller
         return redirect(route('user.dashboard'));
     }
 
-    public function show(TodoItem $todoItem)
+    public function show(TodoItem $todoItem, Request $request)
     {
+        if ($request->expectsJson()) {
+            return new TodoItemResource($todoItem);
+        }
     }
 
     public function edit(TodoItem $todoItem)
