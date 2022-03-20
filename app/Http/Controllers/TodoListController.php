@@ -56,9 +56,14 @@ class TodoListController extends Controller
         return redirect()->back();
     }
 
-    public function destroy(TodoList $todoList)
+    public function destroy(TodoList $todoList, Request $request)
     {
         $todoList->delete();
+
+        if ($request->expectsJson()) {
+            return response('', 204);
+        }
+
         return redirect(route('user.dashboard'));
     }
 }

@@ -46,10 +46,15 @@ class TodoItemController extends Controller
         $todoItem->update($request->validated());
         return redirect()->back();
     }
-    
-    public function destroy(TodoItem $todoItem)
+
+    public function destroy(TodoItem $todoItem, Request $request)
     {
         $todoItem->delete();
+
+        if ($request->expectsJson()) {
+            return response('', 204);
+        }
+
         return redirect(route('user.dashboard'));
     }
 }
