@@ -54,7 +54,15 @@ class TodoItemController extends Controller
 
     public function update(TodoItemUpdateRequest $request, TodoItem $todoItem)
     {
-        $todoItem->update($request->validated());
+        $validated = $request->validated();
+
+        if ($request->expectsJson()) {
+            $validated['done'] = $request->done;
+        } else {
+            $validated['done'] = filter_var($request->done, FILTER_VALIDATE_BOOLEAN);
+        }
+
+        $todoItem->update($validated);
 
         if ($request->expectsJson()) {
             return response('', 204);

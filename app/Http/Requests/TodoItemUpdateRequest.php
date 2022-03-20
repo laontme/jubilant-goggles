@@ -18,13 +18,6 @@ class TodoItemUpdateRequest extends FormRequest
         return true;
     }
 
-    public function prepareForValidation()
-    {
-        $this->merge([
-            'done' => $this->has('done'),
-        ]);
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -35,7 +28,6 @@ class TodoItemUpdateRequest extends FormRequest
         return [
             'title' => 'sometimes|string',
             'description' => 'sometimes|string',
-            'done' => 'sometimes|boolean'
         ];
     }
 }
