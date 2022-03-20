@@ -8,7 +8,8 @@
                 <h2 class="accordion-header" id="headingTwo">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapse-{{ $todoList->id }}">
-                        {{ $todoList->title }}
+                        <span class="me-3 badge rounded-pill bg-primary">{{ $todoList->id }}</span>
+                         {{ $todoList->title }}
                     </button>
                 </h2>
                 <div id="collapse-{{ $todoList->id }}" class="accordion-collapse collapse"
@@ -22,7 +23,10 @@
                                             <input disabled class="ms-4 me-5 form-check-input" type="checkbox"
                                                    name="done" @checked($todoItem->done)>
                                             <div>
-                                                <div>{{ $todoItem->title }}</div>
+                                                <div>
+                                                    <span class="me-1 badge rounded-pill bg-primary">{{ $todoItem->id }}</span>
+                                                    {{ $todoItem->title }}
+                                                </div>
                                                 <p class="mb-0 small">{{ $todoItem->description }}</p>
                                                 <a href="{{ route('todo.item.edit', $todoItem) }}">Edit</a>
                                             </div>
