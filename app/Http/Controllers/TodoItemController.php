@@ -32,6 +32,11 @@ class TodoItemController extends Controller
         $todoList = TodoList::find($request->query('todoList'));
         $todoItem = new TodoItem($request->validated());
         $todoList->TodoItems()->save($todoItem);
+
+        if ($request->expectsJson()) {
+            return response('', 204);
+        }
+
         return redirect(route('user.dashboard'));
     }
 
@@ -50,6 +55,11 @@ class TodoItemController extends Controller
     public function update(TodoItemUpdateRequest $request, TodoItem $todoItem)
     {
         $todoItem->update($request->validated());
+
+        if ($request->expectsJson()) {
+            return response('', 204);
+        }
+
         return redirect()->back();
     }
 

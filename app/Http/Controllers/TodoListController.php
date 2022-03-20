@@ -33,6 +33,10 @@ class TodoListController extends Controller
         $todoList = new TodoList($request->validated());
         $request->user()->TodoLists()->save($todoList);
 
+        if ($request->expectsJson()) {
+            return response('', 204);
+        }
+
         return redirect(route('user.dashboard'));
     }
 
@@ -53,6 +57,11 @@ class TodoListController extends Controller
     public function update(TodoListUpdateRequest $request, TodoList $todoList)
     {
         $todoList->update($request->validated());
+
+        if ($request->expectsJson()) {
+            return response('', 204);
+        }
+
         return redirect()->back();
     }
 
