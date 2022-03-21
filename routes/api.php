@@ -48,3 +48,7 @@ Route::middleware('auth:sanctum')
             });
         });
 });
+
+Route::any('/ping', function () {
+    return 'pong';
+});
