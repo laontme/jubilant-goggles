@@ -56,11 +56,7 @@ class TodoItemController extends Controller
     {
         $validated = $request->validated();
 
-        if ($request->expectsJson()) {
-            $validated['done'] = $request->done;
-        } else {
-            $validated['done'] = filter_var($request->done, FILTER_VALIDATE_BOOLEAN);
-        }
+        $validated['done'] = $request->boolean('done');
 
         $todoItem->update($validated);
 
