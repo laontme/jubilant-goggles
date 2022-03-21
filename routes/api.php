@@ -50,5 +50,8 @@ Route::middleware('auth:sanctum')
 });
 
 Route::any('/ping', function () {
-    return 'pong';
+    return response()->json([
+        'ok' => 'true',
+        'ping' => 'pong'
+    ]);
 });
