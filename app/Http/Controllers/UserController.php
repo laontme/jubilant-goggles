@@ -46,14 +46,17 @@ class UserController extends Controller
 
     public function dashboard (Request $request)
     {
-        $todoLists = $request->user()->TodoLists()->with("TodoItems")->get();
-        return view('user.dashboard', compact('todoLists'));
+        $todoItems = $request->user()->TodoItems()->latest()->limit(5)->get();
+        return view('user.dashboard', compact('todoItems'));
     }
 
     public function show (Request $request)
     {
+        $user = Auth::user();
         if ($request->expectsJson()) {
-            return new UserResource(Auth::user());
+            $token = $user->currentAccessToken()->token;
+            $user->token = $token;
+            return new UserResource($user);
         }
     }
 }

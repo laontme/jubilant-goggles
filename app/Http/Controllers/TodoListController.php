@@ -12,15 +12,20 @@ use Illuminate\Support\Facades\Auth;
 
 class TodoListController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(TodoList::class, 'todoList');
+    }
+
     public function index(Request $request)
     {
-        $todoLists = $request->user()->TodoLists()->with("TodoItems")->get();
+        $todoLists = $request->user()->TodoLists()->get();
 
         if ($request->expectsJson()) {
             return new TodoListCollection($todoLists);
         }
 
-        return true;
+        return view('todo.list.index', compact('todoLists'));
     }
 
     public function create()
@@ -43,10 +48,10 @@ class TodoListController extends Controller
     public function show(TodoList $todoList, Request $request)
     {
         if ($request->expectsJson()) {
-            return new TodoListResource($todoList->with('TodoItems')->first());
+            return new TodoListResource($todoList);
         }
 
-        return true;
+        return view('todo.list.show', compact('todoList'));
     }
 
     public function edit(TodoList $todoList)

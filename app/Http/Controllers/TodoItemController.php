@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 
 class TodoItemController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(TodoItem::class, 'todoItem');
+    }
+
     public function index(Request $request)
     {
         $todoItems = auth()->user()->TodoItems()->get();
@@ -19,6 +24,8 @@ class TodoItemController extends Controller
         if ($request->expectsJson()) {
             return new TodoItemCollection($todoItems);
         }
+
+        return view('todo.item.index', compact('todoItems'));
     }
 
     public function create(Request $request)
@@ -45,6 +52,8 @@ class TodoItemController extends Controller
         if ($request->expectsJson()) {
             return new TodoItemResource($todoItem);
         }
+
+        return view('todo.item.show', compact('todoItem'));
     }
 
     public function edit(TodoItem $todoItem)

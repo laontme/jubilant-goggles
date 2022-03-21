@@ -14,13 +14,19 @@
     <header>
         <div class="container py-3">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 gap-2">
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 gap-4">
                     <li>
                         <a href="{{ route('landing') }}" class="p-0 nav-link">Home</a>
                     </li>
                     @auth
                         <li>
                             <a href="{{ route('user.dashboard') }}" class="p-0 nav-link">Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('todo.list.index') }}" class="p-0 nav-link">All my Todo Lists</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('todo.item.index') }}" class="p-0 nav-link">All my Todo Items</a>
                         </li>
                     @endauth
                 </ul>
@@ -52,7 +58,7 @@
         </div>
     </header>
     <main>
-        <div class="container">
+        <div class="container mb-5">
             @yield('main')
         </div>
     </main>

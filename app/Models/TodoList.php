@@ -14,6 +14,10 @@ class TodoList extends Model
         'title'
     ];
 
+    protected $with = [
+        'TodoItems'
+    ];
+
     public function Owner () {
         return $this->belongsTo(User::class, 'owner_id', 'id');
     }

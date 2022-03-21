@@ -13,7 +13,7 @@ class TodoItem extends Model
 
     protected $fillable = ['title', 'description', 'done'];
 
-    public function List ()
+    public function TodoList ()
     {
         return $this->belongsTo(TodoList::class, 'list_id', 'id');
     }
